@@ -470,7 +470,7 @@ private struct PresetCard: View {
                     .multilineTextAlignment(.leading)
 
                 if preset != .custom {
-                    Text(preset.servers.joined(separator: " · "))
+                    Text(preset == .defaultServers ? l10n.automaticDHCP : preset.servers.joined(separator: " · "))
                         .font(.system(.caption2, design: .monospaced))
                         .foregroundStyle(.tertiary)
                         .lineLimit(1)

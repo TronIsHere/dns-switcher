@@ -86,6 +86,9 @@ final class DNSController: ObservableObject {
     }
 
     var canApply: Bool {
+        guard !selectedService.isEmpty else { return false }
+        if settings.selectedPreset == .defaultServers { return true }
+
         let servers = settings.targetServers()
         guard let primary = servers.first else { return false }
         guard DNSValidator.isValid(primary) else { return false }
@@ -115,6 +118,15 @@ final class DNSController: ObservableObject {
     func applyPreset(_ preset: DNSPreset) async {
         settings.selection = .preset(preset)
         guard preset != .custom else { return }
+
+        if preset == .defaultServers {
+            await performAction {
+                try await DNSManager.resetToAutomatic(for: selectedService)
+            } successMessage: {
+                l10n.dnsReset
+            }
+            return
+        }
 
         let servers = preset.servers
         guard !servers.isEmpty else { return }

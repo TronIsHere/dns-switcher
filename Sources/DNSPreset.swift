@@ -11,7 +11,7 @@ enum DNSPreset: String, CaseIterable, Identifiable {
 
     var servers: [String] {
         switch self {
-        case .defaultServers: return ["78.157.42.100", "78.157.42.101"]
+        case .defaultServers: return []
         case .cloudflare: return ["1.1.1.1", "1.0.0.1"]
         case .google: return ["8.8.8.8", "8.8.4.4"]
         case .quad9: return ["9.9.9.9", "149.112.112.112"]
@@ -58,9 +58,11 @@ enum DNSPreset: String, CaseIterable, Identifiable {
         customPrimary: String = "",
         customSecondary: String = ""
     ) -> DNSPreset? {
-        guard !servers.isEmpty else { return nil }
-
         let normalized = servers.map { $0.trimmingCharacters(in: .whitespaces) }
+
+        if normalized.isEmpty || normalized == ["0.0.0.0"] {
+            return .defaultServers
+        }
 
         for preset in allCases where preset != .custom {
             if serversMatch(normalized, preset.servers) {
@@ -85,7 +87,7 @@ enum DNSPreset: String, CaseIterable, Identifiable {
 
     var englishDescription: String {
         switch self {
-        case .defaultServers: return "Your configured servers"
+        case .defaultServers: return "System default (DHCP)"
         case .cloudflare: return "Fast & privacy-focused"
         case .google: return "Reliable public DNS"
         case .quad9: return "Security & malware blocking"
@@ -95,7 +97,7 @@ enum DNSPreset: String, CaseIterable, Identifiable {
 
     var persianDescription: String {
         switch self {
-        case .defaultServers: return "سرورهای پیکربندی‌شده شما"
+        case .defaultServers: return "پیش‌فرض سیستم (DHCP)"
         case .cloudflare: return "سریع و متمرکز بر حریم خصوصی"
         case .google: return "DNS عمومی قابل اعتماد"
         case .quad9: return "امنیت و مسدودسازی بدافزار"

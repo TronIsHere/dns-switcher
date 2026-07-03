@@ -1,9 +1,6 @@
 import Foundation
 
 struct DNSManager {
-    static let primaryDNS = "78.157.42.100"
-    static let secondaryDNS = "78.157.42.101"
-
     static func listNetworkServices() -> [String] {
         runCommand(executable: "/usr/sbin/networksetup", arguments: ["-listallnetworkservices"])
             .components(separatedBy: "\n")
@@ -36,10 +33,6 @@ struct DNSManager {
             executable: "/usr/sbin/networksetup",
             arguments: ["-setdnsservers", service] + servers
         )
-    }
-
-    static func setCustomDNS(for service: String) async throws {
-        try await setDNS(servers: [primaryDNS, secondaryDNS], for: service)
     }
 
     static func resetToAutomatic(for service: String) async throws {

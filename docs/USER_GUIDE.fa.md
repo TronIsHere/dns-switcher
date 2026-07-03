@@ -35,34 +35,44 @@ DNS Switcher یک برنامه ساده برای macOS است که بدون با
 2. فایل **DNS-Switcher-macOS.zip** را دانلود کنید.
 3. روی فایل zip دوبار کلیک کنید تا **DNS Switcher.app** استخراج شود.
 4. برنامه را به پوشه **Programs** (Applications) بکشید.
+5. برنامه را باز کنید. **macOS مسدود کرد؟** بخش [اولین باز کردن](#اولین-باز-کردن-gatekeeper) را بخوانید.
 
 ### اولین باز کردن (Gatekeeper)
 
-چون این برنامه از خارج Mac App Store توزیع می‌شود و توسط Apple notarize نشده، macOS ممکن است اولین بار آن را مسدود کند.
+> [!IMPORTANT]
+> **اگر macOS در اولین اجرا DNS Switcher را مسدود کرد، این بخش را بخوانید.** برنامه خراب نیست. چون از خارج Mac App Store دانلود شده، macOS ممکن است تا انجام یکی از مراحل زیر اجازه اجرا ندهد.
 
-#### پیام «DNS Switcher.app is damaged and can't be opened»
+> [!WARNING]
+> پیام‌های **«Cannot be opened»**، **«damaged»**، **«cannot be verified»** یا **«unidentified developer»** برای برنامه‌های بدون امضای Apple طبیعی است. این مراحل را **به ترتیب** انجام دهید:
 
-این پیام **گمراه‌کننده** است. برنامه خراب نیست. macOS به فایل‌های دانلودشده از اینترنت برچسب quarantine می‌زند و برنامه‌های بدون امضای رسمی Apple را اجرا نمی‌کند؛ گاهی آن‌ها را «خراب» می‌نامد.
+**مرحله ۱ — بازگرداندن مجوز اجرا** (رایج‌ترین راه‌حل بعد از unzip):
 
-**راه‌حل (یکی را انتخاب کنید):**
+```bash
+chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"
+```
 
-**روش الف — باز کردن با راست‌کلیک (ساده‌ترین)**
-
-1. روی **DNS Switcher.app** راست‌کلیک کنید
-2. **Open** (باز کردن) را بزنید
-3. در پنجره تأیید دوباره **Open** را بزنید
-
-**روش ب — Terminal**
+**مرحله ۲ — حذف برچسب quarantine دانلود:**
 
 ```bash
 xattr -cr "/Applications/DNS Switcher.app"
 ```
 
-سپس برنامه را معمولی باز کنید.
+**مرحله ۳ — باز کردن با راست‌کلیک:**
 
-**روش ج — System Settings**
+روی **DNS Switcher.app** راست‌کلیک کنید → **Open** (باز کردن) → در پنجره تأیید دوباره **Open** را بزنید.
 
-**System Settings** → **Privacy & Security** → پیام برنامه مسدودشده → **Open Anyway**.
+**مرحله ۴ — اجازه در System Settings:**
+
+اگر macOS هنوز می‌گوید برنامه **cannot be verified** (قابل تأیید نیست)، یک بار مرحله ۳ را انجام دهید، سپس **System Settings** → **Privacy & Security** را باز کنید و کنار پیام DNS Switcher روی **Open Anyway** بزنید.
+
+سپس اجرا کنید:
+
+```bash
+open "/Applications/DNS Switcher.app"
+```
+
+> [!TIP]
+> فقط یک بار لازم است. بعد از اولین اجرای موفق، macOS برنامه را به خاطر می‌سپارد.
 
 ## اولین اجرا
 
@@ -188,11 +198,26 @@ DNS Switcher تنظیمات شبکه سیستم را تغییر می‌دهد. m
 - بعد از تغییر پیش‌فرض، **اعمال DNS** را بزنید.
 - در **Terminal** دستور `scutil --dns` را اجرا کنید (پیشرفته).
 
-### برنامه باز نمی‌شود / پیام «damaged»
+### برنامه باز نمی‌شود
 
-- برنامه خراب نیست. quarantine را حذف کنید: `xattr -cr "/Applications/DNS Switcher.app"`
-- یا اولین بار راست‌کلیک → **Open**.
-- **System Settings** → **Privacy & Security** را بررسی کنید.
+> [!IMPORTANT]
+> **macOS برنامه را مسدود کرد؟** برنامه خراب نیست. مراحل زیر را **به ترتیب** انجام دهید (جزئیات بیشتر در بخش [اولین باز کردن](#اولین-باز-کردن-gatekeeper)):
+
+**مرحله ۱ — مجوز اجرا:**
+
+```bash
+chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"
+```
+
+**مرحله ۲ — حذف quarantine:**
+
+```bash
+xattr -cr "/Applications/DNS Switcher.app"
+```
+
+**مرحله ۳ — راست‌کلیک → Open** (اولین بار)
+
+**مرحله ۴ — System Settings → Privacy & Security → Open Anyway** (اگر پیام «cannot be verified» یا «unidentified developer» دیدید)
 
 ### DNS فعلی «خودکار» است ولی DNS سفارشی گذاشتم
 

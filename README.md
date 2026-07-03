@@ -14,17 +14,46 @@ Get the latest pre-built app from [GitHub Releases](https://github.com/TronIsHer
 1. Download `DNS-Switcher-macOS.zip` from the latest release.
 2. Unzip the archive.
 3. Move **DNS Switcher.app** to your Applications folder (optional but recommended).
-4. Open the app.
-
-**If macOS says the app cannot be opened** — try these in order:
-
-1. Restore the executable bit (common after unzip or copying):
-   `chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"`
-2. If macOS says the app is "damaged" (misleading; the app is fine), remove quarantine:
-   `xattr -cr "/Applications/DNS Switcher.app"`
-3. Or right-click **DNS Switcher.app** → **Open** → **Open** again in the dialog.
+4. Open the app. **Blocked by macOS?** See [Can't open the app?](#cant-open-the-app) below.
 
 > Changing DNS requires administrator privileges. macOS will ask for your password when you apply or reset DNS settings.
+
+## Can't open the app?
+
+> [!IMPORTANT]
+> **Read this if macOS blocks DNS Switcher on first launch.** The app is not broken. Because it is downloaded outside the Mac App Store, macOS may refuse to open it until you do one of the steps below.
+
+> [!WARNING]
+> **"Cannot be opened"**, **"damaged"**, **"cannot be verified"**, or **"unidentified developer"** are normal for unsigned apps. Follow these steps in order:
+
+**Step 1 — Restore the executable bit** (most common fix after unzip):
+
+```bash
+chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"
+```
+
+**Step 2 — Remove the download quarantine flag:**
+
+```bash
+xattr -cr "/Applications/DNS Switcher.app"
+```
+
+**Step 3 — Open via right-click:**
+
+Right-click **DNS Switcher.app** → **Open** → click **Open** again in the dialog.
+
+**Step 4 — Allow in System Settings:**
+
+If macOS still says the app **cannot be verified**, try step 3 once, then open **System Settings → Privacy & Security** and click **Open Anyway** next to the DNS Switcher message.
+
+Then run:
+
+```bash
+open "/Applications/DNS Switcher.app"
+```
+
+> [!TIP]
+> You only need to do this once. After the app opens successfully, macOS will remember it.
 
 ## Features
 

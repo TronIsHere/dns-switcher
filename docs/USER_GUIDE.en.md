@@ -33,34 +33,44 @@ DNS Switcher is a simple macOS menu-bar style utility that lets you change DNS s
 2. Download **DNS-Switcher-macOS.zip**.
 3. Double-click the zip file to extract **DNS Switcher.app**.
 4. Drag the app to **Applications**.
+5. Open the app. **Blocked by macOS?** See [First open (Gatekeeper)](#first-open-gatekeeper) below.
 
 ### First open (Gatekeeper)
 
-Because the app is distributed outside the Mac App Store and is not Apple-notarized, macOS may block it the first time you open it.
+> [!IMPORTANT]
+> **Read this if macOS blocks DNS Switcher on first launch.** The app is not broken. Because it is downloaded outside the Mac App Store, macOS may refuse to open it until you do one of the steps below.
 
-#### "DNS Switcher.app is damaged and can't be opened"
+> [!WARNING]
+> **"Cannot be opened"**, **"damaged"**, **"cannot be verified"**, or **"unidentified developer"** are normal for unsigned apps. Follow these steps in order:
 
-This message is **misleading**. The app is not corrupted. macOS adds a quarantine flag to everything downloaded from the internet and refuses to run unsigned apps, sometimes calling them "damaged."
+**Step 1 — Restore the executable bit** (most common fix after unzip):
 
-**Fix (pick one):**
+```bash
+chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"
+```
 
-**Option A — Right-click open (easiest)**
-
-1. Right-click **DNS Switcher.app**
-2. Choose **Open**
-3. Click **Open** in the confirmation dialog
-
-**Option B — Terminal**
+**Step 2 — Remove the download quarantine flag:**
 
 ```bash
 xattr -cr "/Applications/DNS Switcher.app"
 ```
 
-Then double-click the app normally.
+**Step 3 — Open via right-click:**
 
-**Option C — System Settings**
+Right-click **DNS Switcher.app** → **Open** → click **Open** again in the dialog.
 
-Open **System Settings** → **Privacy & Security** → find the blocked app message → **Open Anyway**.
+**Step 4 — Allow in System Settings:**
+
+If macOS still says the app **cannot be verified**, try step 3 once, then open **System Settings → Privacy & Security** and click **Open Anyway** next to the DNS Switcher message.
+
+Then run:
+
+```bash
+open "/Applications/DNS Switcher.app"
+```
+
+> [!TIP]
+> You only need to do this once. After the app opens successfully, macOS will remember it.
 
 ## First launch
 
@@ -186,11 +196,26 @@ DNS Switcher changes system network settings. macOS requires administrator appro
 - Click **Apply DNS** after changing the preset.
 - Open **Terminal** and run: `scutil --dns` to verify system DNS (advanced).
 
-### App won't open / "damaged" message
+### App won't open
 
-- The app is not broken. Remove quarantine: `xattr -cr "/Applications/DNS Switcher.app"`
-- Or right-click → **Open** the first time.
-- Check **System Settings** → **Privacy & Security** for blocked app options.
+> [!IMPORTANT]
+> **macOS blocked the app?** The app is not broken. Follow these steps in order (more detail in [First open (Gatekeeper)](#first-open-gatekeeper)):
+
+**Step 1 — Restore the executable bit:**
+
+```bash
+chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"
+```
+
+**Step 2 — Remove quarantine:**
+
+```bash
+xattr -cr "/Applications/DNS Switcher.app"
+```
+
+**Step 3 — Right-click → Open** (first time)
+
+**Step 4 — System Settings → Privacy & Security → Open Anyway** (if you see "cannot be verified" or "unidentified developer")
 
 ### Current DNS shows "Automatic" but I set custom DNS
 

@@ -63,11 +63,15 @@ struct DNSManager {
     }
 
     private static func runWithAdminPrivileges(executable: String, arguments: [String]) async throws {
-        let shellArgs = ([executable] + arguments)
-            .map { "'\($0.replacingOccurrences(of: "'", with: "'\\''"))'" }
+        let shellCommand = ([executable] + arguments)
+            .map(shellQuote)
             .joined(separator: " ")
 
-        let script = "do shell script \(shellArgs) with administrator privileges"
+        let escapedForAppleScript = shellCommand
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+
+        let script = "do shell script \"\(escapedForAppleScript)\" with administrator privileges"
 
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             DispatchQueue.global(qos: .userInitiated).async {
@@ -95,6 +99,10 @@ struct DNSManager {
                 }
             }
         }
+    }
+
+    private static func shellQuote(_ argument: String) -> String {
+        "'" + argument.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 }
 

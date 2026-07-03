@@ -5,6 +5,8 @@ A lightweight macOS app to switch DNS settings with one click. Built with SwiftU
 ![macOS](https://img.shields.io/badge/macOS-14%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-SwiftUI-orange)
 
+![DNS Switcher UI](sc.png)
+
 ## Download
 
 Get the latest pre-built app from [GitHub Releases](https://github.com/TronIsHere/dns-switcher/releases/latest).
@@ -14,10 +16,13 @@ Get the latest pre-built app from [GitHub Releases](https://github.com/TronIsHer
 3. Move **DNS Switcher.app** to your Applications folder (optional but recommended).
 4. Open the app.
 
-**If macOS says the app is "damaged"** — the download is fine. macOS blocks apps that are not notarized by Apple and often shows this misleading message. Use one of these once:
+**If macOS says the app cannot be opened** — try these in order:
 
-- Right-click **DNS Switcher.app** → **Open** → **Open** again in the dialog, or
-- Run in Terminal: `xattr -cr "/Applications/DNS Switcher.app"`
+1. Restore the executable bit (common after unzip or copying):
+   `chmod +x "/Applications/DNS Switcher.app/Contents/MacOS/DNS Switcher"`
+2. If macOS says the app is "damaged" (misleading; the app is fine), remove quarantine:
+   `xattr -cr "/Applications/DNS Switcher.app"`
+3. Or right-click **DNS Switcher.app** → **Open** → **Open** again in the dialog.
 
 > Changing DNS requires administrator privileges. macOS will ask for your password when you apply or reset DNS settings.
 

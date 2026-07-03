@@ -22,10 +22,14 @@ swiftc \
 
 cp "$SCRIPT_DIR/Info.plist" "$APP_BUNDLE/Contents/Info.plist"
 
+# Ensure the Mach-O stays executable after copy/sign steps (zip/git can drop +x).
+chmod +x "$APP_BUNDLE/Contents/MacOS/$APP_NAME"
+
 # Ad-hoc sign so the bundle is structurally valid. Without an Apple Developer ID
 # certificate + notarization, downloaded copies still need a one-time quarantine
 # bypass (right-click → Open, or: xattr -cr "DNS Switcher.app").
 codesign --force --deep --sign - --options runtime "$APP_BUNDLE"
+chmod +x "$APP_BUNDLE/Contents/MacOS/$APP_NAME"
 
 echo "Built: $APP_BUNDLE"
 echo "Open with: open \"$APP_BUNDLE\""

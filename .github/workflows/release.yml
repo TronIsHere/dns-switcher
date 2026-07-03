@@ -21,6 +21,7 @@ jobs:
 
       - name: Create zip archive
         run: |
+          chmod +x "build/DNS Switcher.app/Contents/MacOS/DNS Switcher"
           cd build
           ditto -c -k --sequesterRsrc --keepParent "DNS Switcher.app" "../DNS-Switcher-macOS.zip"
 

@@ -12,7 +12,12 @@ Get the latest pre-built app from [GitHub Releases](https://github.com/TronIsHer
 1. Download `DNS-Switcher-macOS.zip` from the latest release.
 2. Unzip the archive.
 3. Move **DNS Switcher.app** to your Applications folder (optional but recommended).
-4. Open the app. If macOS blocks it, right-click the app and choose **Open**, then confirm.
+4. Open the app.
+
+**If macOS says the app is "damaged"** — the download is fine. macOS blocks apps that are not notarized by Apple and often shows this misleading message. Use one of these once:
+
+- Right-click **DNS Switcher.app** → **Open** → **Open** again in the dialog, or
+- Run in Terminal: `xattr -cr "/Applications/DNS Switcher.app"`
 
 > Changing DNS requires administrator privileges. macOS will ask for your password when you apply or reset DNS settings.
 
